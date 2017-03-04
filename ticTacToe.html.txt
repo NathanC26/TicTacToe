@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+<div data-role="page">
+  <div data-role="header">
+    <h1>Tic Tac Toe</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+  
+    <div data-role="controlgroup"  data-type="horizontal">
+       <a href= "" input id="button1" onclick="checkMove(1)"; class="ui-btn">1</a>
+       <a href= "" input id="button2" onclick="checkMove(2)"; class="ui-btn">2</a>
+       <a href= "" input id="button3" onclick="checkMove(3)"; class="ui-btn">3</a>
+    </div>
+
+    <div data-role="controlgroup"  data-type="horizontal">
+    <a href= "" input id="button4" onclick="checkMove(4)"; class="ui-btn"> 4</a>
+    <a href= "" input id="button5" onclick="checkMove(5)"; class="ui-btn"> 5</a>
+    <a href= "" input id="button6" onclick="checkMove(6)"; class="ui-btn"> 6</a>
+    </div>
+
+    <div data-role="controlgroup"  data-type="horizontal">
+    <a href= "" input id="button7" onclick="checkMove(7)"; class="ui-btn">7</a>
+    <a href= "" input id="button8" onclick="checkMove(8)"; class="ui-btn">8</a>
+    <a href= "" input id="button9" onclick="checkMove(9)"; class="ui-btn">9</a>
+    </div>
+
+</div> 
+</body>
+</html>
+
+<script>
+var Xturn = new Boolean(true);
+var turn = 1;
+var owner = [];
+for (i = 1; i < 10; i++) 
+{ 
+    owner[i] = "None";
+}
+
+function checkMove(buttonNo)
+{
+    var taken = owner[buttonNo];
+
+    if (taken != "None")
+    {
+       return;
+    }
+    else
+    {
+       if (Xturn)
+       {
+          owner[buttonNo] = "X";
+          $('#button' + buttonNo).text("X");
+          $('#button' + buttonNo).css({'background':'cyan'});
+
+          if (turn > 4)
+          {
+            var result = checkForWinner("X");
+            if (result)
+            {
+              return;
+            }
+          }
+
+          Xturn = false;
+       }
+       else
+       {
+          owner[buttonNo] = "O";
+          $('#button' + buttonNo).text("O");
+          $('#button' + buttonNo).css({'background':'magenta'});
+          
+          if (turn > 4)
+          {
+            var result = checkForWinner("O");
+            if (result)
+            {
+              return;
+            }
+          }
+          Xturn = true;
+       }
+
+       turn++;
+    }
+}
+
+function checkForWinner(player)
+{
+   var winner;
+
+   if (owner[1] == player && owner[4] == player && owner[7] == player)
+   {
+       winner = true;
+   }
+   else if (owner[2] == player && owner[5] == player && owner[8] == player)
+   {
+       winner = true;
+   }
+   else if (owner[3] == player && owner[6] == player && owner[9] == player)
+   {
+       winner = true;
+   }
+   else if (owner[1] == player && owner[2] == player && owner[3] == player)
+   {
+       winner = true;
+   }
+   else if (owner[4] == player && owner[5] == player && owner[6] == player)
+   {
+       winner = true;
+   }
+   else if (owner[7] == player && owner[8] == player && owner[9] == player)
+   {
+       winner = true;
+   }
+   else if (owner[1] == player && owner[5] == player && owner[9] == player)
+   {
+       winner = true;
+   }
+   else if (owner[3] == player && owner[5] == player && owner[7] == player)
+   {
+       winner = true;
+   }
+
+   if (winner)
+   {
+      alert(player + " has won the game!");
+      clearBoard();
+   }
+   if (turn == 9)
+   {
+      alert("This game is a draw...");
+      winner = true;
+      clearBoard();
+   }
+
+   return winner;
+}
+
+function clearBoard()
+{
+  turn = 1;
+  Xturn = true;
+  for (i = 1; i < 10; i++) 
+  { 
+    owner[i] = "None";
+    $('#button' + i).text(i).css({'background':'white'});
+  }
+}
+</script>
